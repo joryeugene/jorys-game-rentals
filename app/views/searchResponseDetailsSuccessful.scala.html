@@ -1,0 +1,45 @@
+@import models.SearchInfo
+@(searchInfo: SearchInfo)
+
+<section id="game-list">
+
+  @for(game <- searchInfo.serviceResponse.gameSearchResults) {
+
+    <article class="media">
+      <figure class="media-left">
+        <p class="image is-64x64">
+          <img src="@game.thumbUrl.getOrElse("http://bulma.io/images/placeholders/128x128.png")">
+        </p>
+      </figure>
+      <div class="media-content">
+        <div class="content">
+
+          <nav class="level is-mobile">
+            <div class="level-left">
+              <div class="level-item">
+                <p class="subtitle is-5">
+                  <strong>@game.name</strong> <small>(@game.platforms.mkString(", "))</small>
+                </p>
+              </div>
+            </div>
+
+            <div class="level-right">
+              <a class="level-item">
+                <span class="icon is-medium"><i class="fa fa-cart-plus"></i></span>
+              </a>
+            </div>
+          </nav>
+
+          <p>
+          @game.deck.getOrElse("No Details")
+          </p>
+
+        </div>
+      </div>
+    </article>
+
+  }
+
+</section>
+
+

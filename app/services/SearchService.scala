@@ -14,7 +14,7 @@ import scala.util.{Failure, Success, Try}
 object SearchService {
 
   val SEARCH_SERVICE_URL =
-    "http://www.giantbomb.com/api/search/?api_key=7da59c68027d5e706bf85af4a73e54df639e9580&format=json&resources=game&field_list=name,image&query="
+    "http://www.giantbomb.com/api/search/?api_key=7da59c68027d5e706bf85af4a73e54df639e9580&format=json&resources=game&field_list=name,image,deck,platforms&query="
   val DOUBLE_QUOTE = "\""
 
   val REQUEST_TIMEOUT_DURATION: FiniteDuration =

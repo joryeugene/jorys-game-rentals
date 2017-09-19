@@ -3,21 +3,17 @@
 
 <div>
 
-<section id="game-list">
+  <h1 class="title"><strong>Search Results for:</strong> @searchInfo.searchString </h1>
 
-    <h1>Search: @searchInfo.searchString </h1>
-    <h1>Response: @searchInfo.serviceResponse.responseDetail </h1>
-    <h1>Success: @searchInfo.serviceResponse.success </h1>
+  <hr>
 
-    @for(game <- searchInfo.serviceResponse.gameSearchResults) {
-        <p>
-            <b>@game.name</b>
-            <img src="@game.thumbUrl">
-        </p>
+  @if(searchInfo.serviceResponse.success) {
+    @searchResponseDetailsSuccessful(searchInfo: SearchInfo)
+  }
 
-    }
-
-</section>
+  @if(!searchInfo.serviceResponse.success) {
+    <h2>Error Response: @searchInfo.serviceResponse.responseDetail</h2>
+  }
 
 </div>
 
