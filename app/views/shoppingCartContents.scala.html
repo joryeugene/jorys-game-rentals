@@ -1,0 +1,12 @@
+@import models.SavedGame
+@(savedGames: List[SavedGame])
+
+<div>
+
+    @for(game <- savedGames) {
+        @game.name
+        <hr>
+        }
+
+</div>
+

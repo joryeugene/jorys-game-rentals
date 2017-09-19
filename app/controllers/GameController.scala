@@ -16,12 +16,12 @@ import scala.concurrent.Future
 
 @Singleton
 class GameController @Inject()(ws: WSClient, actorSystem: ActorSystem)
-    extends Controller {
+  extends Controller {
 
   def search(query: String) = Action.async {
     val searchInfoFuture = Future {
       new SearchInfo(_searchString = query,
-                     _serviceResponse = getServiceResponse(ws, query))
+        _serviceResponse = getServiceResponse(ws, query))
     }
     searchInfoFuture.map(searchInfo =>
       Ok(views.html.searchResponse(searchInfo)))
@@ -44,7 +44,31 @@ class GameController @Inject()(ws: WSClient, actorSystem: ActorSystem)
       SHOPPING_CART.put(fingerprint, ListBuffer(newGameToSave))
     }
 
-    Ok("Good")
+    Ok(getNumOfCartItemsForUser(fingerprint))
+  }
+
+  def getNumOfCartItems(fingerprint: String) = Action {
+    Ok(getNumOfCartItemsForUser(fingerprint))
+  }
+
+  def getNumOfCartItemsForUser(fingerprint: String) = {
+    var numOfItems = 0
+
+    if (SHOPPING_CART.contains(fingerprint)) {
+      numOfItems = SHOPPING_CART(fingerprint).length
+    }
+
+    numOfItems.toString
+  }
+
+  def getCartItems(fingerprint: String) = Action {
+    var usersGames: List[SavedGame] = List.empty[SavedGame]
+
+    if (SHOPPING_CART.contains(fingerprint)) {
+      usersGames = SHOPPING_CART(fingerprint).toList
+    }
+
+    Ok(views.html.shoppingCartContents(usersGames))
   }
 
 }
