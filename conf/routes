@@ -1,6 +1,7 @@
 GET        /                    controllers.HomeController.index
-GET        /game/search         controllers.GameController.search(query)
-GET        /game/add          controllers.GameController.addToCart(fingerprint,name,deck,platforms,thumbUrl)
-#GET        /game/delete          controllers.GameController.deleteFromCart(gameId,fingerprint)
-#GET        /game/cart          controllers.GameController.getCartItems(gameId,fingerprint)
+GET        /search              controllers.GameController.search(query)
+#GET        /cart          controllers.GameController.getCartItems(gameId,fingerprint)
+GET        /cart/count          controllers.GameController.getNumOfCartItems(fingerprint)
+GET        /cart/add            controllers.GameController.addToCart(fingerprint,name,deck,platforms,thumbUrl)
+#GET        /cart/delete          controllers.GameController.deleteFromCart(gameId,fingerprint)
 GET        /assets/*file        controllers.Assets.versioned(path="/public", file: Asset)

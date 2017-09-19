@@ -44,7 +44,21 @@ class GameController @Inject()(ws: WSClient, actorSystem: ActorSystem)
       SHOPPING_CART.put(fingerprint, ListBuffer(newGameToSave))
     }
 
-    Ok("Good")
+    Ok(getNumOfCartItemsForUser(fingerprint))
+  }
+
+  def getNumOfCartItems(fingerprint: String) = Action {
+    Ok(getNumOfCartItemsForUser(fingerprint))
+  }
+
+  def getNumOfCartItemsForUser(fingerprint: String) = {
+    var numOfItems = 0
+
+    if (SHOPPING_CART.contains(fingerprint)) {
+      numOfItems = SHOPPING_CART(fingerprint).length
+    }
+
+    numOfItems.toString
   }
 
 }
