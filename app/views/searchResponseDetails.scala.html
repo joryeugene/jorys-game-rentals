@@ -1,0 +1,23 @@
+@import models.SearchInfo
+@(searchInfo: SearchInfo)
+
+<div>
+
+<section id="game-list">
+
+    <h1>Search: @searchInfo.searchString </h1>
+    <h1>Response: @searchInfo.serviceResponse.responseDetail </h1>
+    <h1>Success: @searchInfo.serviceResponse.success </h1>
+
+    @for(game <- searchInfo.serviceResponse.gameSearchResults) {
+        <p>
+            <b>@game.name</b>
+            <img src="@game.thumbUrl">
+        </p>
+
+    }
+
+</section>
+
+</div>
+
