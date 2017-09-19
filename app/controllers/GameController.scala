@@ -3,7 +3,8 @@ package controllers
 import javax.inject._
 
 import akka.actor.ActorSystem
-import models.SearchInfo
+import controllers.GameController.SHOPPING_CART
+import models.{SavedGame, SearchInfo}
 import play.api.libs.ws.WSClient
 import play.api.mvc.{Action, _}
 import services.SearchService._
@@ -26,19 +27,29 @@ class GameController @Inject()(ws: WSClient, actorSystem: ActorSystem)
       Ok(views.html.searchResponse(searchInfo)))
   }
 
-//  def search(searchString: String, fingerprint: String) = Action.async {
-//    val searchResultsFuture = Future {
-//      createSearchInfoResponse(searchString, fingerprint)
-//    }
-//    searchResultsFuture.map(searchResults =>
-//      Ok(views.html.searchResponse(searchResults)))
-//  }
+  def addToCart(fingerprint: String,
+                name: String,
+                deck: String,
+                platforms: String,
+                thumbUrl: String) = Action {
 
-//  _numOfCartItems = CartHelper.getNumOfItems(fingerprint),
+    val newGameToSave = SavedGame(fingerprint, name, deck, platforms, thumbUrl)
+
+    if (SHOPPING_CART.contains(fingerprint)) {
+      val usersGames: ListBuffer[SavedGame] = SHOPPING_CART(fingerprint)
+      if (!usersGames.contains(newGameToSave)) {
+        usersGames.+=(newGameToSave)
+      }
+    } else {
+      SHOPPING_CART.put(fingerprint, ListBuffer(newGameToSave))
+    }
+
+    Ok("Good")
+  }
 
 }
 
 object GameController {
-  val SHOPPING_CART: mutable.HashMap[String, ListBuffer[String]] =
+  val SHOPPING_CART: mutable.HashMap[String, ListBuffer[SavedGame]] =
     mutable.HashMap.empty
 }

@@ -1,3 +1,5 @@
+/* jshint ignore:start */
+
 $(function () {
 
   // <!------------------------- Database Key ------------------------->
@@ -56,6 +58,41 @@ $(function () {
     $searchBtn.addClass(isLoading);
   });
 
-  // <!------------------------- ¥ ------------------------->
+  // <!------------------------- Save Games To "Cart" ------------------------->
+
+  var addToCartBtns = document.querySelectorAll('.add-to-cart-btn');
+
+  for (var i = 0; i < addToCartBtns.length; i++) {
+
+    addToCartBtns[i].addEventListener("click", function (e) {
+
+      var identifierClass = e.srcElement.id.toString();
+      var $gameName = $("strong#game-name." + identifierClass).get(0).innerText;
+      var $gameDeck = $("p#game-deck." + identifierClass).get(0).innerText;
+      var $gamePlatforms = $("small#game-platforms." + identifierClass).get(0).innerText;
+      var $gameThumbUrl = $("img." + identifierClass).get(0).src;
+
+      $.ajax({
+        url: "/game/add",
+        type: "get",
+        data: {
+          fingerprint: getUserFingerPrint(),
+          name: $gameName,
+          deck: $gameDeck,
+          platforms: $gamePlatforms,
+          thumbUrl: $gameThumbUrl
+        },
+        success: function (response) {
+        },
+        error: function (xhr) {
+          console.log("Failed to add to cart");
+        }
+      });
+
+    });
+
+  }
 
 });
+
+/* jshint ignore:end */
