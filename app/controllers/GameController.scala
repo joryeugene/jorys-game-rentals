@@ -85,6 +85,11 @@ class GameController @Inject()(ws: WSClient, actorSystem: ActorSystem)
     Ok(JsArray(databaseJson))
   }
 
+  def resetDatabase() = Action {
+    SHOPPING_CART.clear()
+    Ok("Purged")
+  }
+
 }
 
 object GameController {
