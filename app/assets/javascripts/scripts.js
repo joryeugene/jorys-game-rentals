@@ -116,20 +116,13 @@ for (var i = 0; i < addToCartBtns.length; i++) {
 
     var identifierClass = e.srcElement.id.toString();
     var $gameName = $('strong#game-name.' + identifierClass).get(0).innerText;
-    var $gameDeck = $('p#game-deck.' + identifierClass).get(0).innerText;
-    var $gamePlatforms = $('small#game-platforms.' + identifierClass).get(
-        0).innerText;
-    var $gameThumbUrl = $('img.' + identifierClass).get(0).src;
 
     $.ajax({
       url: '/cart/add',
       type: 'get',
       data: {
         fingerprint: getUserFingerPrint(),
-        name: $gameName,
-        deck: $gameDeck,
-        platforms: $gamePlatforms,
-        thumbUrl: $gameThumbUrl
+        name: $gameName
       },
       success: function (response) {
         changeCounter(response);

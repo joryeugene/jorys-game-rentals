@@ -8,7 +8,7 @@
     <article class="media">
       <figure class="media-left">
         <p class="image is-64x64">
-          <img class="game@game.hashCode()" src="@game.thumbUrl.getOrElse("http://bulma.io/images/placeholders/128x128.png")">
+          <img src="@game.thumbUrl.getOrElse("http://bulma.io/images/placeholders/128x128.png")">
         </p>
       </figure>
       <div class="media-content">
@@ -18,7 +18,8 @@
             <div class="level-left">
               <div class="level-item">
                 <p class="subtitle is-5">
-                  <strong id="game-name" class="game@game.hashCode()">@game.name</strong> (<small id="game-platforms" class="game@game.hashCode()">@game.platforms.mkString(", ")</small>)
+                  <strong id="game-name" class="game@game.hashCode()">@game.name</strong>
+                  (<small id="game-platforms">@game.platforms.mkString(", ")</small>)
                 </p>
               </div>
             </div>
@@ -30,7 +31,7 @@
             </div>
           </nav>
 
-          <p id="game-deck" class="game@game.hashCode()">
+          <p id="game-deck">
           @game.deck.getOrElse("No Details")
           </p>
 

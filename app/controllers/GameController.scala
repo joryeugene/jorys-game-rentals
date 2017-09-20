@@ -4,7 +4,7 @@ import javax.inject._
 
 import akka.actor.ActorSystem
 import controllers.GameController.SHOPPING_CART
-import models.{SavedGame, SearchInfo}
+import models.SearchInfo
 import play.api.libs.ws.WSClient
 import play.api.mvc.{Action, _}
 import services.SearchService._
@@ -27,21 +27,15 @@ class GameController @Inject()(ws: WSClient, actorSystem: ActorSystem)
       Ok(views.html.searchResponse(searchInfo)))
   }
 
-  def addToCart(fingerprint: String,
-                name: String,
-                deck: String,
-                platforms: String,
-                thumbUrl: String) = Action {
-
-    val newGameToSave = SavedGame(fingerprint, name, deck, platforms, thumbUrl)
+  def addToCart(fingerprint: String, name: String) = Action {
 
     if (SHOPPING_CART.contains(fingerprint)) {
-      val usersGames: ListBuffer[SavedGame] = SHOPPING_CART(fingerprint)
-      if (!usersGames.contains(newGameToSave)) {
-        usersGames.+=(newGameToSave)
+      val usersGames: ListBuffer[String] = SHOPPING_CART(fingerprint)
+      if (!usersGames.contains(name)) {
+        usersGames.+=(name)
       }
     } else {
-      SHOPPING_CART.put(fingerprint, ListBuffer(newGameToSave))
+      SHOPPING_CART.put(fingerprint, ListBuffer(name))
     }
 
     Ok(getNumOfCartItemsForUser(fingerprint))
@@ -62,7 +56,7 @@ class GameController @Inject()(ws: WSClient, actorSystem: ActorSystem)
   }
 
   def getCartItems(fingerprint: String) = Action {
-    var usersGames: List[SavedGame] = List.empty[SavedGame]
+    var usersGames: List[String] = List.empty[String]
 
     if (SHOPPING_CART.contains(fingerprint)) {
       usersGames = SHOPPING_CART(fingerprint).toList
@@ -72,13 +66,13 @@ class GameController @Inject()(ws: WSClient, actorSystem: ActorSystem)
   }
 
   def emptyCart(fingerprint: String) = Action {
-    SHOPPING_CART(fingerprint) = ListBuffer.empty[SavedGame]
-    Ok(views.html.shoppingCartContents(List.empty[SavedGame]))
+    SHOPPING_CART(fingerprint) = ListBuffer.empty[String]
+    Ok(views.html.shoppingCartContents(List.empty[String]))
   }
 
 }
 
 object GameController {
-  val SHOPPING_CART: mutable.HashMap[String, ListBuffer[SavedGame]] =
+  val SHOPPING_CART: mutable.HashMap[String, ListBuffer[String]] =
     mutable.HashMap.empty
 }

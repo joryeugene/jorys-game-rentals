@@ -1,5 +1,4 @@
-@import models.SavedGame
-@(savedGames: List[SavedGame])
+@(savedGames: List[String])
 
 <section class="modal-card-body">
 
@@ -11,7 +10,6 @@
     }
 
     @if(savedGames.length >= 1) {
-
       <nav class="panel">
         <p class="panel-heading">
           Total of @savedGames.length
@@ -20,13 +18,12 @@
           }
         </p>
 
-
-        @for(game <- savedGames) {
-          <a class="panel-block">
+        @for(gameName <- savedGames) {
+          <a class="panel-block no-pointer">
             <span class="panel-icon">
               <i class="fa fa-gamepad"></i>
             </span>
-            @game.name
+            @gameName
           </a>
         }
 
@@ -37,7 +34,6 @@
         </div>
       </nav>
     }
-
   </div>
 
 </section>
@@ -48,7 +44,7 @@
 
   <a href="mailto:jory@@pestorious.com?subject=Rental Request!&body=@{
     if(savedGames.length == 1) "Yo bro, please give me this game" else "Yo bro, please give me these games:"
-  } @savedGames.map(_.name).mkString(", ")">
+  } @savedGames.mkString(", ")">
     <button class="button is-warning">Submit Rental Request</button>
   </a>
 }
