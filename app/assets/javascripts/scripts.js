@@ -40,8 +40,6 @@ function changeCounter(num) {
 // <!------------------------- Shopping Cart Modal ------------------------->
 var $cartModal = $('#cart-modal');
 var $cartModalBtn = $('#cart-modal-btn');
-var $cartModalBottomBtn = $('.modal-card-foot .button');
-var $cartModalClose = $('#cart-modal-close, .modal-background');
 var $shoppingCartContents = $("#shopping-cart-contents").get(0);
 var htmlTag = $('html');
 var isActiveClass = 'is-active';

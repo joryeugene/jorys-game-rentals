@@ -48,6 +48,7 @@ object SearchService {
 
   def resolveServiceResponse(
       serviceResponseFuture: Future[Try[WSResponse]]): ServiceResponse = {
+
     Await.result(serviceResponseFuture, Duration.Inf)
     val triedSearchResponse: Try[WSResponse] =
       serviceResponseFuture.value.get.get
