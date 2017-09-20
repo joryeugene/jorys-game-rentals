@@ -1,23 +1,37 @@
 @import models.SavedGame
 @(savedGames: List[SavedGame])
 
-<div>
+<section class="modal-card-body">
 
-  @if(savedGames.length < 1) {
-    <center><h2 class="subtitle">Cart is Empty</h2></center>
-  }
-
-  @if(savedGames.length >= 1) {
-    @for(game <- savedGames) {
-      @game.name
-      <hr>
+  <div class="content">
+    @if(savedGames.length < 1) {
+      <center><h2 class="subtitle">Cart is Empty</h2></center>
     }
 
-    <p><b>Total of @savedGames.length
-      @{
-      if(savedGames.length == 1) "Game" else "Games"
-    }</b></p>
-  }
+    @if(savedGames.length >= 1) {
+      @for(game <- savedGames) {
+        @game.name
+        <hr>
+      }
 
-</div>
+      <p><b>Total of @savedGames.length
+        @{
+          if(savedGames.length == 1) "Game" else "Games"
+        }</b></p>
+    }
+  </div>
+
+</section>
+
+<footer class="modal-card-foot">
+@if(savedGames.length >= 1) {
+  <p>Ready to Checkout?</p>
+
+  <a href="mailto:jory@@pestorious.com?subject=Rental Request!&body=@{
+    if(savedGames.length == 1) "Yo bro, please give me this game" else "Yo bro, please give me these games:"
+  } @savedGames.map(_.name).mkString(", ")">
+    <button class="button is-warning">Submit Rental Request</button>
+  </a>
+}
+</footer>
 

@@ -16,12 +16,12 @@ import scala.concurrent.Future
 
 @Singleton
 class GameController @Inject()(ws: WSClient, actorSystem: ActorSystem)
-  extends Controller {
+    extends Controller {
 
   def search(query: String) = Action.async {
     val searchInfoFuture = Future {
       new SearchInfo(_searchString = query,
-        _serviceResponse = getServiceResponse(ws, query))
+                     _serviceResponse = getServiceResponse(ws, query))
     }
     searchInfoFuture.map(searchInfo =>
       Ok(views.html.searchResponse(searchInfo)))
