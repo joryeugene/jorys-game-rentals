@@ -11,6 +11,10 @@
     @searchResponseDetailsSuccessful(searchInfo: SearchInfo)
   }
 
+  @if(searchInfo.serviceResponse.success && searchInfo.serviceResponse.gameSearchResults.length < 1) {
+    <h2 class="subtitle">No Results</h2>
+  }
+
   @if(!searchInfo.serviceResponse.success) {
     <h2>Error Response: @searchInfo.serviceResponse.responseDetail</h2>
   }

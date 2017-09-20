@@ -3,10 +3,21 @@
 
 <div>
 
+  @if(savedGames.length < 1) {
+    <center><h2 class="subtitle">Cart is Empty</h2></center>
+  }
+
+  @if(savedGames.length >= 1) {
     @for(game <- savedGames) {
-        @game.name
-        <hr>
-        }
+      @game.name
+      <hr>
+    }
+
+    <p><b>Total of @savedGames.length
+      @{
+      if(savedGames.length == 1) "Game" else "Games"
+    }</b></p>
+  }
 
 </div>
 
