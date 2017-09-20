@@ -71,6 +71,11 @@ class GameController @Inject()(ws: WSClient, actorSystem: ActorSystem)
     Ok(views.html.shoppingCartContents(usersGames))
   }
 
+  def emptyCart(fingerprint: String) = Action {
+    SHOPPING_CART(fingerprint) = ListBuffer.empty[SavedGame]
+    Ok(views.html.shoppingCartContents(List.empty[SavedGame]))
+  }
+
 }
 
 object GameController {
