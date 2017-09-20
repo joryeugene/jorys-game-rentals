@@ -5,6 +5,7 @@ import javax.inject._
 import akka.actor.ActorSystem
 import controllers.GameController.SHOPPING_CART
 import models.SearchInfo
+import play.api.libs.json._
 import play.api.libs.ws.WSClient
 import play.api.mvc.{Action, _}
 import services.SearchService._
@@ -68,6 +69,20 @@ class GameController @Inject()(ws: WSClient, actorSystem: ActorSystem)
   def emptyCart(fingerprint: String) = Action {
     SHOPPING_CART(fingerprint) = ListBuffer.empty[String]
     Ok(views.html.shoppingCartContents(List.empty[String]))
+  }
+
+  def getDatabaseInfo() = Action {
+    val databaseJson: List[JsObject] =
+      SHOPPING_CART
+        .map(
+          entry =>
+            JsObject(
+              List(
+                "userFingerprint" -> JsString(entry._1),
+                "cart" -> JsArray(entry._2.map(game => JsString(game)).toList)
+              )))
+        .toList
+    Ok(JsArray(databaseJson))
   }
 
 }
