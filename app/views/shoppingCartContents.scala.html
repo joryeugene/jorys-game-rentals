@@ -2,7 +2,7 @@
 
 <header class="modal-card-head">
   <p class="modal-card-title">Shopping Cart</p>
-  <button class="delete" id="cart-modal-close"></button>
+  <button class="delete" id="cart-modal-close" onclick="closeShoppingCart()"></button>
 </header>
 
 <section class="modal-card-body">
@@ -49,7 +49,7 @@
 
   <a href="mailto:jory@@pestorious.com?subject=Rental Request!&body=@{
     if(savedGames.length == 1) "Yo bro, please give me this game" else "Yo bro, please give me these games:"
-  } @savedGames.mkString(", ")">
+  } @savedGames.mkString(", ")" onclick="closeShoppingCart()">
     <button class="button is-warning">Submit Rental Request</button>
   </a>
 }

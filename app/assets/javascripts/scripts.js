@@ -82,15 +82,10 @@ $cartModalBtn.click(function () {
   htmlTag.addClass(isClippedClass);
 });
 
-$cartModalClose.click(function () {
+function closeShoppingCart() {
   htmlTag.removeClass(isClippedClass);
   $cartModal.removeClass(isActiveClass);
-});
-
-$cartModalBottomBtn.click(function () {
-  htmlTag.removeClass(isClippedClass);
-  $cartModal.removeClass(isActiveClass);
-});
+}
 
 $(document).on(keyUp, function (e) {
   if (e.keyCode == 27) {
